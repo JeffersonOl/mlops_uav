@@ -1,0 +1,26 @@
+FROM python:3.11-slim
+
+LABEL maintainer="Jefferson Olalla <jefferson.olalla@yachaytech.edu.ec>"
+LABEL description="UAV ObstacleProxyModel training — Apollo pipeline proxy"
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY requirements_train.txt .
+RUN pip install --no-cache-dir -r requirements_train.txt
+
+COPY train.py .
+
+ENV WANDB_API_KEY=""
+
+RUN mkdir -p /app/outputs
+VOLUME ["/app/outputs"]
+
+CMD ["python", "train.py"]
