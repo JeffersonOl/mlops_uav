@@ -17,6 +17,7 @@ COPY requirements_infer.txt .
 RUN pip install --no-cache-dir -r requirements_infer.txt
 
 COPY app.py .
+COPY best_model.pt .
 
 ENV PORT=5000
 ENV MODEL_PATH=/app/best_model.pt
