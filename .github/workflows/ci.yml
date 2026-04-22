@@ -1,0 +1,106 @@
+name: CI Pipeline — MLOps UAV
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Test inference service
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install torch==2.2.2 flask==3.0.3 \
+            prometheus-client==0.20.0 numpy==1.26.4
+
+      - name: Lint with flake8
+        run: |
+          pip install flake8 -q
+          flake8 inference/app.py training/train.py \
+            --max-line-length=120 --ignore=E501,W503
+          echo "Lint OK"
+
+      - name: Test /health endpoint
+        run: |
+          python -c "
+          import subprocess, time, requests
+          p = subprocess.Popen(['python', 'inference/app.py'])
+          time.sleep(4)
+          r = requests.get('http://localhost:5000/health', timeout=5)
+          assert r.status_code == 200
+          data = r.json()
+          assert data['status'] == 'healthy'
+          assert data['model'] == 'ObstacleProxyModel'
+          p.terminate()
+          print('Test /health: PASS')
+          "
+
+      - name: Test /predict endpoint
+        run: |
+          python -c "
+          import subprocess, time, requests, numpy as np, base64
+          p = subprocess.Popen(['python', 'inference/app.py'])
+          time.sleep(4)
+          frame = np.random.rand(64*64).astype(np.float32)
+          b64 = base64.b64encode(frame.tobytes()).decode()
+          r = requests.post('http://localhost:5000/predict',
+                            json={'frame': b64}, timeout=5)
+          assert r.status_code == 200
+          data = r.json()
+          assert 'obstacle_detected' in data
+          assert 'confidence' in data
+          assert 'latency_ms' in data
+          assert 'cbf_activated' in data
+          p.terminate()
+          print('Test /predict: PASS')
+          "
+
+      - name: Test /metrics endpoint
+        run: |
+          python -c "
+          import subprocess, time, requests
+          p = subprocess.Popen(['python', 'inference/app.py'])
+          time.sleep(4)
+          r = requests.get('http://localhost:5000/metrics', timeout=5)
+          assert r.status_code == 200
+          assert 'uav_frames_total' in r.text
+          assert 'uav_inference_latency_seconds' in r.text
+          assert 'uav_cbf_activations_total' in r.text
+          p.terminate()
+          print('Test /metrics: PASS')
+          "
+
+  build:
+    name: Build Docker image
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build inference image
+        run: |
+          docker build \
+            -f inference/Dockerfile.infer \
+            -t uav-inference:${{ github.sha }} \
+            ./inference
+          echo "Docker build OK — sha: ${{ github.sha }}"
+
+      - name: Verify image health
+        run: |
+          docker run -d --name test-infer \
+            -p 5000:5000 \
+            uav-inference:${{ github.sha }}
+          sleep 8
+          curl -f http://localhost:5000/health
+          docker stop test-infer
+          echo "Image health check: PASS"
