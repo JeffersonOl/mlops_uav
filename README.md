@@ -151,32 +151,26 @@ curl http://localhost:5000/health
 ---
 
 ## 📁 Estructura del Repositorio
-mlops_uav/
-├── .github/
-│   └── workflows/
-│       └── ci.yml                  # CI/CD: lint → test → build → push
-├── docs/
-│   ├── architecture_diagram.svg    # Diagrama visual del sistema
-│   └── fundamentals_ai_eng.png     # Marco teórico de referencia
-├── training/
-│   ├── Dockerfile.train
-│   ├── train.py                    # ObstacleProxyModel + W&B KPIs
-│   └── requirements_train.txt
-├── inference/
-│   ├── Dockerfile.infer
-│   ├── app.py                      # Flask API + UI + Prometheus
-│   └── requirements_infer.txt
-├── streaming/
-│   ├── kafka_producer.py           # Topics: camera / imu / cbf
-│   └── kafka_consumer.py
-├── monitoring/
-│   └── prometheus.yml
-├── k8s/
-│   ├── deployment.yaml             # HPA: 1 → 5 réplicas
-│   └── service.yaml                # NodePort :30500
-├── docker-compose.yml              # Stack: Kafka + Inference + Prometheus + Grafana
-├── REQUIREMENTS.md                 # RF + RNF + Risk Analysis + Responsible AI
-└── ARCHITECTURE.md                 # 7 capas Apollo-UAV + mapeo investigación
+
+| Ruta | Descripción |
+|------|-------------|
+| `.github/workflows/ci.yml` | CI/CD: lint → test → build → push |
+| `docs/architecture_diagram.svg` | Diagrama visual del sistema |
+| `docs/fundamentals_ai_eng.png` | Marco teórico de referencia |
+| `training/Dockerfile.train` | Imagen Docker entrenamiento |
+| `training/train.py` | ObstacleProxyModel + W&B KPIs |
+| `inference/Dockerfile.infer` | Imagen Docker inferencia |
+| `inference/app.py` | Flask API + UI + Prometheus |
+| `streaming/kafka_producer.py` | Topics: camera / imu / cbf |
+| `streaming/kafka_consumer.py` | Consumidor Kafka → inferencia |
+| `monitoring/prometheus.yml` | Config scraping Prometheus |
+| `k8s/deployment.yaml` | Deployment + HPA 1→5 réplicas |
+| `k8s/service.yaml` | Service NodePort :30500 |
+| `docker-compose.yml` | Stack: Kafka + Inference + Prometheus + Grafana |
+| `REQUIREMENTS.md` | RF + RNF + Risk Analysis + Responsible AI |
+| `ARCHITECTURE.md` | 7 capas Apollo-UAV + mapeo investigación |
+
+
 ---
 
 ## 🔬 Investigación Asociada
