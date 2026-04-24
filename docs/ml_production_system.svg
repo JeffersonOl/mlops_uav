@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 580" width="960" height="580">
+  <defs>
+    <style>text { font-family: Arial, sans-serif; }</style>
+  </defs>
+
+  <!-- Fondo -->
+  <rect width="960" height="580" fill="#ffffff"/>
+
+  <!-- Titulo principal -->
+  <text x="480" y="32" text-anchor="middle" font-size="22" font-weight="bold" fill="#111111" font-family="Arial">ML in a Production System</text>
+  <text x="480" y="54" text-anchor="middle" font-size="13" fill="#444444" font-family="Arial">System: UAV Indoor Navigation — MLOps | Yachay Tech | Jefferson Olalla | 2026</text>
+
+  <!-- System boundary -->
+  <rect x="20" y="68" width="920" height="420" rx="10" fill="#f8f8f8" stroke="#111111" stroke-width="2"/>
+  <text x="36" y="90" font-size="13" font-weight="bold" fill="#111111" font-family="Arial">System: UAV Indoor Navigation MLOps</text>
+
+  <!-- ── FILA 1: User Interface ── -->
+  <rect x="40" y="100" width="880" height="52" rx="6" fill="#e8e8e8" stroke="#aaaaaa" stroke-width="1"/>
+  <text x="480" y="122" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111" font-family="Arial">User interface</text>
+  <text x="480" y="140" text-anchor="middle" font-size="11" fill="#444444" font-family="Arial">Flask UI (/predict demo)  |  Grafana dashboard (localhost:3000)  |  W&amp;B dashboard</text>
+
+  <!-- ── FILA 2: Componentes funcionales ── -->
+
+  <!-- Kafka - NON ML -->
+  <rect x="40" y="170" width="165" height="90" rx="6" fill="#e8e8e8" stroke="#aaaaaa" stroke-width="1"/>
+  <text x="122" y="196" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111" font-family="Arial">Kafka streaming</text>
+  <text x="122" y="214" text-anchor="middle" font-size="10" fill="#555555" font-family="Arial">uav.camera.frames</text>
+  <text x="122" y="228" text-anchor="middle" font-size="10" fill="#555555" font-family="Arial">uav.imu.data</text>
+  <text x="122" y="242" text-anchor="middle" font-size="10" fill="#555555" font-family="Arial">uav.cbf.metrics</text>
+
+  <!-- ML COMPONENT 1: Inference -->
+  <rect x="222" y="170" width="205" height="90" rx="6" fill="#f5a623" stroke="#c07800" stroke-width="1.5"/>
+  <text x="324" y="196" text-anchor="middle" font-size="12" font-weight="bold" fill="#5a3000" font-family="Arial">ML inference</text>
+  <text x="324" y="214" text-anchor="middle" font-size="10" fill="#5a3000" font-family="Arial">ObstacleProxyModel</text>
+  <text x="324" y="228" text-anchor="middle" font-size="10" fill="#5a3000" font-family="Arial">→ YOLOv8-nano + Safe-PPO</text>
+  <text x="324" y="244" text-anchor="middle" font-size="10" fill="#5a3000" font-family="Arial">val_acc=1.0 | C9: cbf=59</text>
+
+  <!-- ML COMPONENT 2: Training pipeline -->
+  <rect x="444" y="170" width="205" height="90" rx="6" fill="#f5a623" stroke="#c07800" stroke-width="1.5"/>
+  <text x="546" y="196" text-anchor="middle" font-size="12" font-weight="bold" fill="#5a3000" font-family="Arial">ML training pipeline</text>
+  <text x="546" y="214" text-anchor="middle" font-size="10" fill="#5a3000" font-family="Arial">train.py + W&amp;B tracking</text>
+  <text x="546" y="228" text-anchor="middle" font-size="10" fill="#5a3000" font-family="Arial">KPIs: cbf, jerk, t_return</text>
+  <text x="546" y="244" text-anchor="middle" font-size="10" fill="#5a3000" font-family="Arial">Referencia: Corrida C9</text>
+
+  <!-- Flask API - NON ML -->
+  <rect x="666" y="170" width="165" height="90" rx="6" fill="#e8e8e8" stroke="#aaaaaa" stroke-width="1"/>
+  <text x="748" y="196" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111" font-family="Arial">Flask API</text>
+  <text x="748" y="214" text-anchor="middle" font-size="10" fill="#555555" font-family="Arial">/predict  /health</text>
+  <text x="748" y="228" text-anchor="middle" font-size="10" fill="#555555" font-family="Arial">/metrics</text>
+  <text x="748" y="244" text-anchor="middle" font-size="10" fill="#555555" font-family="Arial">localhost:5000</text>
+
+  <!-- Flechas fila 1 a fila 2 -->
+  <line x1="324" y1="152" x2="324" y2="170" stroke="#888888" stroke-width="1" marker-end="url(#arr)"/>
+  <line x1="546" y1="152" x2="546" y2="170" stroke="#888888" stroke-width="1" marker-end="url(#arr)"/>
+
+  <!-- ── FILA 3: Infraestructura ── -->
+
+  <!-- Prometheus -->
+  <rect x="40" y="280" width="190" height="70" rx="6" fill="#e8e8e8" stroke="#aaaaaa" stroke-width="1"/>
+  <text x="135" y="304" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111" font-family="Arial">Prometheus</text>
+  <text x="135" y="322" text-anchor="middle" font-size="10" fill="#555555" font-family="Arial">System monitoring</text>
+  <text x="135" y="338" text-anchor="middle" font-size="10" fill="#555555" font-family="Arial">scrape 5s | :9090</text>
+
+  <!-- Grafana -->
+  <rect x="248" y="280" width="190" height="70" rx="6" fill="#e8e8e8" stroke="#aaaaaa" stroke-width="1"/>
+  <text x="343" y="304" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111" font-family="Arial">Grafana</text>
+  <text x="343" y="322" text-anchor="middle" font-size="10" fill="#555555" font-family="Arial">Dashboard visualization</text>
+  <text x="343" y="338" text-anchor="middle" font-size="10" fill="#555555" font-family="Arial">3 panels | :3000</text>
+
+  <!-- Kubernetes -->
+  <rect x="456" y="280" width="190" height="70" rx="6" fill="#e8e8e8" stroke="#aaaaaa" stroke-width="1"/>
+  <text x="551" y="304" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111" font-family="Arial">Kubernetes</text>
+  <text x="551" y="322" text-anchor="middle" font-size="10" fill="#555555" font-family="Arial">Orchestration + HPA</text>
+  <text x="551" y="338" text-anchor="middle" font-size="10" fill="#555555" font-family="Arial">1→5 replicas | :30500</text>
+
+  <!-- Docker -->
+  <rect x="664" y="280" width="176" height="70" rx="6" fill="#e8e8e8" stroke="#aaaaaa" stroke-width="1"/>
+  <text x="752" y="304" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111" font-family="Arial">Docker</text>
+  <text x="752" y="322" text-anchor="middle" font-size="10" fill="#555555" font-family="Arial">Containerization</text>
+  <text x="752" y="338" text-anchor="middle" font-size="10" fill="#555555" font-family="Arial">train + inference</text>
+
+  <!-- Flechas fila 2 a fila 3 -->
+  <line x1="324" y1="260" x2="135" y2="280" stroke="#888888" stroke-width="1" stroke-dasharray="4,2" marker-end="url(#arr)"/>
+  <line x1="546" y1="260" x2="551" y2="280" stroke="#888888" stroke-width="1" stroke-dasharray="4,2" marker-end="url(#arr)"/>
+  <text x="340" y="275" text-anchor="middle" font-size="9" fill="#888888" font-family="Arial">telemetry</text>
+  <text x="600" y="275" text-anchor="middle" font-size="9" fill="#888888" font-family="Arial">deploys</text>
+
+  <!-- ── FILA 4: CI/CD + Data ── -->
+
+  <!-- GitHub Actions -->
+  <rect x="40" y="370" width="270" height="60" rx="6" fill="#e8e8e8" stroke="#aaaaaa" stroke-width="1"/>
+  <text x="175" y="394" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111" font-family="Arial">GitHub Actions CI/CD</text>
+  <text x="175" y="414" text-anchor="middle" font-size="10" fill="#555555" font-family="Arial">lint → test → build → push</text>
+
+  <!-- Training data -->
+  <rect x="328" y="370" width="270" height="60" rx="6" fill="#e8e8e8" stroke="#aaaaaa" stroke-width="1"/>
+  <text x="463" y="394" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111" font-family="Arial">Training data</text>
+  <text x="463" y="414" text-anchor="middle" font-size="10" fill="#555555" font-family="Arial">Corridas C1-C13 | CSVs reales</text>
+
+  <!-- Model monitoring -->
+  <rect x="616" y="370" width="224" height="60" rx="6" fill="#e8e8e8" stroke="#aaaaaa" stroke-width="1"/>
+  <text x="728" y="394" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111" font-family="Arial">Model monitoring</text>
+  <text x="728" y="414" text-anchor="middle" font-size="10" fill="#555555" font-family="Arial">W&amp;B artifacts + runs</text>
+
+  <!-- data arrows -->
+  <line x1="463" y1="370" x2="546" y2="260" stroke="#888888" stroke-width="1" stroke-dasharray="4,2" marker-end="url(#arr)"/>
+  <text x="510" y="360" font-size="9" fill="#888888" font-family="Arial">uses</text>
+  <line x1="728" y1="370" x2="546" y2="260" stroke="#888888" stroke-width="1" stroke-dasharray="4,2" marker-end="url(#arr)"/>
+  <text x="680" y="340" font-size="9" fill="#888888" font-family="Arial">observes</text>
+
+  <!-- ── ENVIRONMENT (externo) ── -->
+
+  <!-- Flechas entorno al sistema -->
+  <!-- left arrows -->
+  <line x1="0" y1="200" x2="38" y2="200" stroke="#888888" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="0" y1="260" x2="38" y2="260" stroke="#888888" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="0" y1="315" x2="38" y2="315" stroke="#888888" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="0" y1="395" x2="38" y2="395" stroke="#888888" stroke-width="1.5" marker-end="url(#arr)"/>
+  <!-- right arrows -->
+  <line x1="960" y1="200" x2="922" y2="200" stroke="#888888" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="960" y1="260" x2="922" y2="260" stroke="#888888" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="960" y1="315" x2="922" y2="315" stroke="#888888" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="960" y1="395" x2="922" y2="395" stroke="#888888" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Environment label -->
+  <text x="948" y="290" text-anchor="middle" font-size="11" fill="#666666" font-family="Arial" transform="rotate(90,948,290)">Environment</text>
+
+  <!-- ── LEGEND ── -->
+  <rect x="40" y="502" width="16" height="16" rx="3" fill="#f5a623" stroke="#c07800" stroke-width="1.5"/>
+  <text x="62" y="514" font-size="11" fill="#111111" font-family="Arial">ML component</text>
+  <rect x="180" y="502" width="16" height="16" rx="3" fill="#e8e8e8" stroke="#aaaaaa" stroke-width="1"/>
+  <text x="202" y="514" font-size="11" fill="#111111" font-family="Arial">Non-ML component</text>
+  <rect x="360" y="502" width="16" height="16" rx="3" fill="#f8f8f8" stroke="#111111" stroke-width="1.5"/>
+  <text x="382" y="514" font-size="11" fill="#111111" font-family="Arial">System boundary</text>
+
+  <!-- Footer -->
+  <text x="480" y="540" text-anchor="middle" font-size="10" fill="#888888" font-family="Arial">Machine Learning in Production • Claire Le Goues &amp; Christian Kaestner Carnegie Mellon University • Spring 2026</text>
+  <text x="480" y="556" text-anchor="middle" font-size="10" fill="#888888" font-family="Arial">Adapted for: UAV Indoor Navigation — Jefferson D. Olalla | Yachay Tech | commit ee2950a (v8.0-O2)</text>
+
+  <!-- Arrow marker -->
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M2 2L8 5L2 8" fill="none" stroke="#888888" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+</svg>

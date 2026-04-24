@@ -122,3 +122,40 @@ Baidu/U. de Toronto), adaptada sistemáticamente al dominio UAV indoor GPS-denie
 **Autor:** Jefferson D. Olalla Delgado — Yachay Tech
 **Fecha:** 22 de abril de 2026
 **Repositorio:** https://github.com/JeffersonOl/mlops_uav
+
+---
+
+## ML in a Production System (Framework CMU)
+
+Siguiendo el framework de *Machine Learning in Production* (Carnegie Mellon University,
+Claire Le Goues & Christian Kaestner, Spring 2026):
+
+![ML in a Production System](./docs/ml_production_system.svg)
+
+### Componentes ML (naranja) — solo 2
+
+| Componente | Archivo | Descripción |
+|-----------|---------|-------------|
+| **ML inference** | `inference/app.py` | ObstacleProxyModel → proxy de YOLOv8-nano + Safe-PPO |
+| **ML training pipeline** | `training/train.py` | Entrenamiento + W&B KPIs (cbf, jerk, t_return) |
+
+### Componentes no-ML (gris) — infraestructura que rodea al modelo
+
+| Componente | Tecnología | Rol |
+|-----------|-----------|-----|
+| User interface | Flask UI + Grafana + W&B | Visualización y demo |
+| Data streaming | Apache Kafka | 3 topics replicando ROS2 |
+| Flask API | Python Flask | /predict /health /metrics |
+| System monitoring | Prometheus + Grafana | Telemetría en tiempo real |
+| Orchestration | Kubernetes + HPA | Escalado 1→5 réplicas |
+| Containerization | Docker | Portabilidad |
+| CI/CD | GitHub Actions | lint→test→build→push |
+| Training data | Corridas C1-C13 | CSVs reales de Gazebo |
+| Model monitoring | W&B artifacts | Versionado de modelos |
+
+### Por qué esto importa
+
+La mayoría de tesis UAV tienen solo el componente ML (naranja).
+La mayoría de tesis MLOps tienen solo la infraestructura (gris).
+Este sistema tiene ambos — conectados con evidencia real de 13 corridas
+de simulación, 7 fixes documentados y KPIs medidos (commit ee2950a, v8.0-O2).
