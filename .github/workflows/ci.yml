@@ -20,7 +20,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install torch==2.2.2 flask==3.0.3 \
+          pip install torch==2.2.2 flask==3.0.3 requests \
             prometheus-client==0.20.0 numpy==1.26.4
 
       - name: Syntax check
